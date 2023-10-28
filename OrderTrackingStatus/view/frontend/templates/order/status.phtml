@@ -1,0 +1,77 @@
+<?php
+/** @var Template $block */
+
+/** @var  Escaper $escaper */
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+$saveURL = $block->getFormActionUrl();
+?>
+<div id="custom-form">
+
+    <form class="form contact"
+
+          action="<?php echo $saveURL ?>"
+
+          id="custom-form"
+
+          method="post"
+
+          data-hasrequired="<?php echo __('* Required Fields') ?>"
+
+          data-mage-init='{"validation":{}}'>
+
+        <input type="hidden" name="cproduct_id" id="cproduct_id" value="0"/>
+
+        <fieldset class="fieldset">
+
+            <legend class="legend"><span><?php echo __("Query Detail") ?></span></legend>
+            <br/>
+
+            <div class="field Order ID required">
+
+                <label class="label" for="name"><span><?php echo __('Order ID') ?></span></label>
+
+                <div class="control">
+
+                    <input name="order_id" id="order_id" title="<?php echo __('Order Id') ?>" class="input-text"
+                           type="text"
+                           data-validate="{required:true}"/>
+
+                </div>
+
+            </div>
+
+            <div class="field email required">
+
+                <label class="label" for="email"><span><?php echo __('Email') ?></span></label>
+
+                <div class="control">
+
+                    <input name="email" id="email" title="<?php echo __('Email') ?>" class="input-text" type="email"
+                           data-validate="{required:true, 'validate-email':true}"/>
+
+                </div>
+
+            </div>
+
+        </fieldset>
+
+        <div class="actions-toolbar">
+
+            <div class="primary">
+
+                <button type="submit" title="<?php echo __('Submit') ?>" class="action submit primary" id="custom_btn">
+
+                    <span><?php echo __('Submit') ?></span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

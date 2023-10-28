@@ -1,0 +1,153 @@
+<?php /** @var $block RLTSquare\OrderTrackingStatus\Block\OrderStatus\OrderStatusData */
+
+use Magento\Framework\Exception\LocalizedException; ?>
+<?php $orderStatusData = array() ?>
+<?php try {
+    $orderStatusData = $block->orderTracking();
+} catch (LocalizedException $e) {
+} ?>
+
+<?php if ($orderStatusData['isOrderIdValid']): ?>
+    <div style="text-align: center;">
+        <div>
+            <h2 style="margin-top: 10px; font-weight: 400;" class="page-title">
+                ORDER NUMBER: <?= $orderStatusData['orderIncrementId']; ?>
+            </h2>
+        </div>
+        <div>
+            <h2 style="font-weight: 400;">DELIVERY ADDRESS</h2>
+            <?= $orderStatusData['deliveryAddress']; ?>
+        </div>
+        <div>
+            <h2 style="font-weight: 400;">Mobile: <?= $orderStatusData['mobile']; ?></h2>
+            <h2 style="font-weight: 400;">Email: <?= $orderStatusData['email']; ?></h2>
+        </div>
+        <div style="text-align: center;">
+            <?php if (isset($orderStatusData['products']['BigBuy'])): ?>
+                <!-- Display shipment part one for BigBuy products -->
+                <div>
+                    <h2 style="margin-top: 10px; font-weight: 400;" class="page-title">
+                        PART SHIPMENT 1/2
+                    </h2>
+                </div>
+                <div>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Status</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Shipping Method</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Tracking number</th>
+                        </tr>
+                        <!-- Display BigBuy shipment information here -->
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 8px;">Package sent</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;"><?php echo $orderStatusData['shippingMethod']; ?></td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">Your tracking number</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 8px;">During treatment</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 8px; color: <?php echo $orderStatusData['tracking_info'][0]['status_color']; ?>">
+                                <?php echo $orderStatusData['tracking_info'][0]['status']; ?>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- Display BigBuy products -->
+                <div>
+                    <h2 style="margin-top: 20px; font-weight: 400;" class="page-title">BigBuy Products:</h2>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Item ID</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Product Name</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Product Image</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Product Qty</th>
+                        </tr>
+                        <?php foreach ($orderStatusData['products']['BigBuy'] as $product): ?>
+                            <tr>
+                                <td style="border: 1px solid #ccc; padding: 8px;"><?= $product['item_id']; ?></td>
+                                <td style="border: 1px solid #ccc; padding: 8px;"><?= $product['product_name']; ?></td>
+                                <td style="border: 1px solid #ccc; padding: 8px;">
+                                    <img src="<?= $product['product_image']; ?>"
+                                         alt="<?= $product['product_name']; ?>" width="50">
+                                </td>
+                                <td style="border: 1px solid #ccc; padding: 8px;"><?= number_format($product['product_qty'],0) ; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+            <?php endif; ?>
+            <?php if (isset($orderStatusData['products']['VidaXl'])): ?>
+                <!-- Display shipment part two for Vidaxl products -->
+                <div>
+                    <h2 style="margin-top: 10px; font-weight: 400;" class="page-title">
+                        PART SHIPMENT 2/2
+                    </h2>
+                </div>
+                <div>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Status</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Freight forwarder</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Tracking number</th>
+                        </tr>
+                        <!-- Display Vidaxl shipment information here -->
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 8px;">Order Processing</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;"><?php echo $orderStatusData['shippingMethod']; ?></td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">Waiting</td>
+                        </tr>
+
+                        <tr>
+<!--                            <td style="border: 1px solid #ccc; padding: 8px; color: --><?php //echo $orderStatusData['tracking_info'][1]['status_color']; ?><!--">-->
+<!--                                --><?php //echo $orderStatusData['tracking_info'][1]['status']; ?>
+<!--                            </td>-->
+                        </tr>
+                    </table>
+                </div>
+                <!-- Display Vidaxl products -->
+                <h2 style="margin-top: 20px; font-weight: 400;" class="page-title">Vidaxl Products:</h2>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Item ID</th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Product Name</th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Product Image</th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Product Qty</th>
+                    </tr>
+                    <?php foreach ($orderStatusData['products']['VidaXl'] as $product): ?>
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 8px;"><?= $product['item_id']; ?></td>
+                            <td style="border: 1px solid #ccc; padding: 8px;"><?= $product['product_name']; ?></td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">
+                                <img src="<?= $product['product_image']; ?>"
+                                     alt="<?= $product['product_name']; ?>" width="50">
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 8px;"><?= number_format($product['product_qty'],0) ; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+        </div>
+        <!-- Billing Address -->
+        <div>
+            <h2 style="margin-top: 20px; font-weight: 400;">BILLING INFORMATION</h2>
+            <?= $orderStatusData['billingAddress']; ?>
+        </div>
+        <!-- Payment Method -->
+        <div>
+            <h2 style="margin-top: 20px; font-weight: 400;">PAYMENT METHOD</h2>
+            <?= $orderStatusData['paymentMethod']; ?>
+            <br>
+        </div>
+        <div>
+            <h2 style="margin-top: 20px; font-weight: 400;" class="page-title">Order Overview:</h2>
+            <?= $orderStatusData['orderOverview']; ?>
+        </div>
+    </div>
+<?php else: ?>
+    <div style="text-align: center;">
+        <div>
+            <h2 class="page-title">This Order Id is invalid</h2>
+        </div>
+    </div>
+<?php endif; ?>
